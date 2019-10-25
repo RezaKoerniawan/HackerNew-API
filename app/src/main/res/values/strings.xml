@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">News</string>
+    <string name="app_msg_close">Press Back button again to exit</string>
+
+    <string name="news_title">Top Stories</string>
+    <string name="news_score">Scores : %s</string>
+    <string name="news_comment">Comments : %s</string>
+
+    <string name="detail_title">Story Detail</string>
+    <string name="detail_description_title">Deskripsi :</string>
+    <string name="detail_comment_title">Komentar</string>
+    <string name="detail_description_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="detail_comment_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+
+
+    <!--Favorite-->
+    <string name="favorite_title">Favorites</string>
+    <string name="favorite_msg_add">Add to Favorite</string>
+    <string name="favorite_msg_remove">Remove from Favorite</string>
+    <string name="favorite_error">Error\n%1$s</string>
+</resources>
