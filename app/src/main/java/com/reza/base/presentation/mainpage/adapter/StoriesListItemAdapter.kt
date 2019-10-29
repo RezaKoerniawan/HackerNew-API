@@ -32,6 +32,7 @@ class StoriesListItemAdapter : BaseRecycleViewAdapter<NewsItem>() {
         override lateinit var binding: ItemStoriesBinding
         private var viewModel: StoriesListItemViewModel? = null
         private var data: NewsItem? = null
+        private var newsId: Int = 0
 
         init {
             binding.vm = StoriesListItemViewModel()
@@ -47,6 +48,7 @@ class StoriesListItemAdapter : BaseRecycleViewAdapter<NewsItem>() {
             this.data = data
 
             data.id.let {
+                newsId = it
                 viewModel?.bTextId?.set(it.toString())
             }
 
@@ -67,97 +69,17 @@ class StoriesListItemAdapter : BaseRecycleViewAdapter<NewsItem>() {
                 viewModel?.bTextScores?.set(scoreTotal)
             }
 
-            data.kids.let {
-                var totalComment: Int? = it?.size
-                if (totalComment == null) {
-                    totalComment = 0
-                }
-                val commentTotal = context.getString(R.string.news_comment, totalComment.toString())
+            data.descendants.let {
+                val commentTotal = context.getString(R.string.news_comment, it.toString())
                 viewModel?.bTextComments?.set(commentTotal)
+
             }
         }
 
         override fun onClick(view: View) {
 
-            DetailPageActivity.startThisActivity(this.context)
+            DetailPageActivity.startThisActivity(this.context, newsId)
 
-
-            /*data?.let {
-                if (viewModel?.bIsFavorite?.get()!!) {
-                    removeFromFavorite(it)
-                } else {
-                    addToFavorite(it)
-                }
-            }*/
         }
-
-        /*private fun checkIsFavorite(idNews: Int) {
-            try {
-                context.database.use {
-                    val result = select(NewsItem.TABLE_NEWS_FAVORITE)
-                        .whereArgs(
-                            "(NEWS_ID = {id})",
-                            "id" to idNews
-                        )
-                    val favorite = result.parseList(classParser<NewsItem>())
-                    viewModel?.bIsFavorite?.set(!favorite.isEmpty())
-                }
-            } catch (e: SQLiteConstraintException) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.favorite_error, e.localizedMessage),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        private fun addToFavorite(data: NewsItem) {
-            try {
-                context.database.use {
-                    insert(
-                        NewsItem.TABLE_NEWS_FAVORITE,
-                        NewsItem.NEWS_ID to data.id,
-                        NewsItem.NEWS_TITLE to data.title,
-                        NewsItem.NEWS_AUTHOR to data.by,
-                        NewsItem.NEWS_DATE to data.time
-                    )
-                }
-                viewModel?.bIsFavorite?.set(true)
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.favorite_msg_add),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } catch (e: SQLiteConstraintException) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.favorite_error, e.localizedMessage),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        private fun removeFromFavorite(data: NewsItem) {
-            try {
-                context.database.use {
-                    delete(
-                        NewsItem.TABLE_NEWS_FAVORITE, "(NEWS_ID = {id})",
-                        "id" to data.id
-                    )
-                }
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.favorite_msg_remove),
-                    Toast.LENGTH_SHORT
-                ).show()
-                viewModel?.bIsFavorite?.set(false)
-            } catch (e: SQLiteConstraintException) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.favorite_error, e.localizedMessage),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }*/
     }
 }
