@@ -9,14 +9,15 @@ import com.reza.base.core.BaseRecycleViewAdapter
 import com.reza.base.core.BaseViewHolder
 import com.reza.base.core.ViewDataBindingOwner
 import com.reza.base.databinding.ItemStoriesBinding
+import com.reza.base.databinding.ItemStoriesFavoriteBinding
 import com.reza.base.entity.NewsItem
 import com.reza.base.presentation.detailpage.DetailPageActivity
 import com.reza.base.util.DateHelper
 
-class StoriesListItemAdapter : BaseRecycleViewAdapter<NewsItem>() {
+class StoriesFavoriteListItemAdapter : BaseRecycleViewAdapter<NewsItem>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<NewsItem> {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_stories, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_stories_favorite, parent, false)
         return ViewHolder(parent.context, view)
     }
 
@@ -26,16 +27,16 @@ class StoriesListItemAdapter : BaseRecycleViewAdapter<NewsItem>() {
 
     class ViewHolder(context: Context, view: View) :
         BaseViewHolder<NewsItem>(context, view),
-        StoriesListItemView,
-        ViewDataBindingOwner<ItemStoriesBinding> {
+        StoriesFavoriteListItemView,
+        ViewDataBindingOwner<ItemStoriesFavoriteBinding> {
 
-        override lateinit var binding: ItemStoriesBinding
-        private var viewModel: StoriesListItemViewModel? = null
+        override lateinit var binding: ItemStoriesFavoriteBinding
+        private var viewModel: StoriesFavoriteListItemViewModel? = null
         private var data: NewsItem? = null
         private var newsId: Int = 0
 
         init {
-            binding.vm = StoriesListItemViewModel()
+            binding.vm = StoriesFavoriteListItemViewModel()
             binding.view = this
             viewModel = binding.vm
         }
@@ -54,25 +55,6 @@ class StoriesListItemAdapter : BaseRecycleViewAdapter<NewsItem>() {
 
             data.title.let {
                 viewModel?.bTextTitle?.set(it)
-            }
-
-            data.by.let {
-                viewModel?.bTextAuthor?.set(it)
-            }
-
-            data.time.let {
-                viewModel?.bTextDate?.set(DateHelper.dateMessageFormat(it, DateHelper.DDMMMMYYYY))
-            }
-
-            data.score.let {
-                val scoreTotal = context.getString(R.string.news_score, it.toString())
-                viewModel?.bTextScores?.set(scoreTotal)
-            }
-
-            data.descendants.let {
-                val commentTotal = context.getString(R.string.news_comment, it.toString())
-                viewModel?.bTextComments?.set(commentTotal)
-
             }
         }
 
