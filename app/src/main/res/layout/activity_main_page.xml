@@ -46,12 +46,27 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal"
+            app:layoutManager="@{view.layoutManagerFavorite}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_stories_favorite" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rv_list_favorite"
+            android:layout_marginTop="8dp"
             app:layoutManager="@{view.layoutManager}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_news" />
+            tools:listitem="@layout/item_stories" />
 
         <!--Loading-->
         <androidx.constraintlayout.widget.ConstraintLayout

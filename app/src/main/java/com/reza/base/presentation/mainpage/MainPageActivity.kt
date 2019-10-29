@@ -3,19 +3,20 @@ package com.reza.base.presentation.mainpage
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.reza.base.R
 import com.reza.base.core.BaseActivity
 import com.reza.base.core.ViewDataBindingOwner
 import com.reza.base.databinding.ActivityMainPageBinding
-import com.reza.base.presentation.favorite.FavoriteActivity
+import com.reza.base.entity.NewsItem
+import com.reza.base.presentation.mainpage.adapter.StoriesFavoriteListItemAdapter
 import com.reza.base.presentation.mainpage.adapter.StoriesListItemAdapter
+import com.reza.base.util.database
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.select
 
 class MainPageActivity : BaseActivity(),
     MainPageView,
@@ -35,9 +36,14 @@ class MainPageActivity : BaseActivity(),
     private lateinit var viewModel: MainPageViewModel
     override lateinit var binding: ActivityMainPageBinding
 
+    private lateinit var listAdapterFavorite: StoriesFavoriteListItemAdapter
+    override var layoutManagerFavorite: LinearLayoutManager
+        get() = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        set(value) {}
+
     private lateinit var listAdapter: StoriesListItemAdapter
-    override var layoutManager: LinearLayoutManager
-        get() = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+    override var layoutManager: GridLayoutManager
+        get() = GridLayoutManager(this, 2)
         set(value) {}
 
     private var time: Long = 0
@@ -61,12 +67,21 @@ class MainPageActivity : BaseActivity(),
 
         title = getString(R.string.news_title)
 
-        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        divider.setDrawable(ContextCompat.getDrawable(this, R.drawable.vertical_space_divider)!!)
-        binding.rvList.addItemDecoration(divider)
+        listAdapterFavorite = StoriesFavoriteListItemAdapter()
+        binding.rvListFavorite.adapter = listAdapterFavorite
 
         listAdapter = StoriesListItemAdapter()
         binding.rvList.adapter = listAdapter
+
+        showFavorite()
+    }
+
+    private fun showFavorite() {
+        database.use {
+            val result = select(NewsItem.TABLE_NEWS_FAVORITE)
+            val favorite = result.parseList(classParser<NewsItem>())
+            listAdapterFavorite.setData(favorite)
+        }
     }
 
     private fun observeError() {
@@ -91,22 +106,6 @@ class MainPageActivity : BaseActivity(),
             }
         }
     }
-
-    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_favorite, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        // Handle item selection
-        return when (item?.itemId) {
-            R.id.menu_favorite -> {
-                FavoriteActivity.startThisActivity(this)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }*/
 
     override fun onResume() {
         super.onResume()
