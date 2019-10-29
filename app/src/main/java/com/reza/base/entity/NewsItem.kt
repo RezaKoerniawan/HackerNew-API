@@ -6,7 +6,7 @@ data class NewsItem(
     val by: String,
     val time: Long,
     val score: Int,
-    val kids: List<Int>?
+    val descendants: Int
 ) {
     companion object {
         const val TABLE_NEWS_FAVORITE: String = "TABLE_NEWS_FAVORITE"
@@ -15,6 +15,6 @@ data class NewsItem(
         const val NEWS_AUTHOR: String = "NEWS_AUTHOR"
         const val NEWS_DATE: String = "NEWS_DATE"
         const val NEWS_SCORE: String = "NEWS_SCORE"
-        const val NEWS_COMMENT: String = "NEWS_COMMENT"
+        const val NEWS_TOTAL_COMMENT: String = "NEWS_TOTAL_COMMENT"
     }
 }

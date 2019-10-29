@@ -27,7 +27,7 @@ class DatabaseHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorite.db",
             NewsItem.NEWS_AUTHOR to TEXT,
             NewsItem.NEWS_DATE to INTEGER,
             NewsItem.NEWS_SCORE to INTEGER,
-            NewsItem.NEWS_COMMENT to INTEGER
+            NewsItem.NEWS_TOTAL_COMMENT to INTEGER
         )
     }
 
