@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">News</string>
+    <string name="app_name">HackerNews</string>
     <string name="app_msg_close">Press Back button again to exit</string>
 
     <string name="news_title">Top Stories</string>
